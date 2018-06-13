@@ -18,14 +18,10 @@ void setup(){
     }
   }*/
   cam = new Capture(this, cameras[0]);
-  cam.start();
-  feld = new Arena(cam,640,480,640,480);
-  
+  feld = new Arena(cam,640,480,640,480);  
+  feld.update();
 }
 
 void draw(){
-  if(cam.available()){
-    cam.read();
-    image(cam,0,0);
-  }
+    
 }
