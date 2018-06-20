@@ -17,10 +17,12 @@ void setup(){
     }
   }*/
   cam = new Capture(this, cameras[0]);
-  feld = new Arena(cam,640,480,640,480);  
-  feld.update();
+  feld = new Arena(cam,640,480,640,480); 
 }
 
 void draw(){
-    
+  feld.update();
+  feld.camPic();
+  fill(color(0,0,0));
+  ellipse(640/2,480/2,5,5);
 }
