@@ -16,26 +16,27 @@ void setup() {
 
   // initialize the serial port:
   Serial.begin(9600);
-  turn(180);
+//  turn(180);
+  Move(300); //300mm
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  turn(180);
-
+//  turn(180);
 }
 
 void turn(float degree){
-  float toCoveredDistance = degree / radiusFromRoboter;
-  for(int i = 0; i < stepsPerRevolution; i++){
+  float toCoveredDistance = (degree / radiusFromRoboter)*(1/3.0);
+  for(int i = 0; i < toCoveredDistance; i++){
     myStepper1.step(1);
     myStepper2.step(-1);
   }
 }
 
+//distance in milli meters
 void Move(float distance){
-  for(int i = 0; i < stepsPerRevolution; i++){
-    myStepper1.step(-1);
+  for(int i = 0; i < (distance*3); i++){ //passt ungefähr mit mal drei
+    myStepper1.step(1);
     myStepper2.step(1);
   }
 }
