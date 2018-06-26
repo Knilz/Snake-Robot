@@ -13,7 +13,7 @@ class Arena{
   public PVector posFront;  //vorderer Markierung der Schlange
   public PVector posBack;   //hinterer Markierung der Schlange
   
-  public float deg; //Grad um die die Snake drehen muss
+  public float deg; //Gradzahl (in deg) um die die Snake im Uhrzeigersinn drehen muss
   public float dist; //Distanz die der Roboter vorwärts fahren muss
   
   //Farbe bei tatsächlicher Beleuchtung von
@@ -41,7 +41,7 @@ class Arena{
       
       //initCols();
       colHint = color(122,122,122);
-      colFront = color(140,20,38);
+      colFront = color(130,10,35);
       colBack = color(0,89,72);
       colFood = color(17,17,17);
   }
@@ -63,10 +63,13 @@ class Arena{
    //aktualisiert die Positionen 
    public void update(){
      updatePic();
-     //camPic();
      updatePos();
-     //updateDegDist();
-     //printCol(pic[320][240]);
+     updateDegDist();
+     camPic();
+     drawPos();
+   }
+   public void printColAtPos(int x,int y){
+      printCol(pic[x][y]);
    }
    //aktualisiert Positionen von Food,Front,Back anhand von Array pic
    private void updatePos(){
@@ -83,7 +86,7 @@ class Arena{
      }
      printPos();
    }
-   private void drawPos(){
+   public void drawPos(){
     fill(color(255,255,255));
     ellipse(posFood.x,posFood.y,5,5);
     ellipse(posFront.x,posFront.y,5,5);
@@ -98,18 +101,35 @@ class Arena{
      println("dist: " +dist);
      println("deg: " +deg); 
    }
+   //berechnet aus den aktuellen Positionsvektoren den zu drehenden Winkel, und die zu fahrende Distanz
    private void updateDegDist(){
     PVector rV  = PVector.sub(posFront,posBack); //Vektor von PosBack zu posFront
-    println("rV: " +rV);
     PVector mp = PVector.add(posBack,PVector.div(rV,2)); //ungefährer Mittelpunkt von Schlange
     PVector mpToFood = PVector.sub(posFood,mp);
     this.dist = mpToFood.mag();
-    this.deg = degrees(PVector.angleBetween(rV,mpToFood));
+    float det = det(rV,mpToFood);
+    println("det: "+det);
+    float angle = degrees(PVector.angleBetween(rV,mpToFood));
+    if(det>0){
+      this.deg = angle;
+    }else{
+      this.deg = 360 - angle;
+    }
+    printDegDist();
 
    }
+   //gibt Determinante zweier R2 vektoren zurück
+   private float det(PVector a, PVector b){
+     return (a.x*b.y) - (a.y*b.x);
+   }
+   //gibt zurück ob sich die Farben ausreichend ähneln
    private boolean colSimil(color a,color b){
-     float alldif = 20;
-     return(abs(red(a)-red(b))< alldif && abs(green(a)-green(b))< alldif && abs(blue(a)-blue(b))< alldif);
+     float allDif = 50;
+     return colDif(a,b) <= allDif;
+   }
+   //gibt den insgesamten Unterschied der Farbwerte
+   private float colDif(color a, color b){
+     return abs(red(a)-red(b))+ abs(green(a)-green(b)) + abs(blue(a)-blue(b));
    }
    //aktualisiert Array "pic"
    private void updatePic(){
@@ -134,6 +154,20 @@ class Arena{
         println("Unterschied: "+verhDif);
       }
    }
+
+   //gibt das aktuelle Bild der Kamera aus
+   public void camPic(){
+    if(cam.available()){
+     cam.read(); 
+    }
+    image(cam,0,0);
+   }
+   //gibt die einzelnen Farbwerte einer Farbe in der Konsole aus
+   private void printCol(color col){
+     println("Rot: "+red(col)+ ", Blau: "+blue(col)+", Gruen: "+green(col)); 
+   }
+   /*    vorerst nicht benötigter Code: 
+   
    //gibt den PixelArray aus (für Tests),schneller ist camPic benutzen
    private void displayPic(){
      for(int i = 0;i< pBreite;i++){
@@ -142,16 +176,5 @@ class Arena{
        point(i,j);
       }
      }
-   }
-   //gibt das aktuelle Bild der Kamera aus
-   public void camPic(){
-    if(cam.available()){
-     cam.read(); 
-    }
-    image(cam,0,0);
-    drawPos();
-   }
-   private void printCol(color col){
-     println("Rot: "+red(col)+ ", Blau: "+blue(col)+", Gruen: "+green(col)); 
-   }
+   }*/
 }
