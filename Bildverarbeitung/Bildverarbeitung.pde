@@ -18,7 +18,7 @@ void setup(){
   }*/
   cam = new Capture(this, cameras[0]);
   println("verwendete Kamera: " +cameras[0]);
-  feld = new Arena(cam,640,480,640,480); 
+  feld = new Arena(cam,640,480,1040,760); 
 }
 void draw(){
   feld.camPic();

@@ -41,9 +41,9 @@ class Arena{
       
       //initCols();
       colHint = color(122,122,122);
-      colFront = color(130,10,35);
-      colBack = color(0,89,72);
-      colFood = color(17,17,17);
+      colFront = color(135,15,40);
+      colBack = color(10,105,80);
+      colFood = color(165,120,170);
   }
   private void initCols(){
     //Farben bei optimaler Beleuchtung:
@@ -84,13 +84,19 @@ class Arena{
         }
       }
      }
+     //Vektoren werden in mm gebracht
+     posFood.mult(aBreite/pBreite);
+     posBack.mult(aBreite/pBreite);
+     posFront.mult(aBreite/pBreite);
+     
      printPos();
    }
    public void drawPos(){
+    float verh = pBreite/aBreite;
     fill(color(255,255,255));
-    ellipse(posFood.x,posFood.y,5,5);
-    ellipse(posFront.x,posFront.y,5,5);
-    ellipse(posBack.x,posBack.y,5,5);
+    ellipse(posFood.x*verh,posFood.y*verh,5,5);
+    ellipse(posFront.x*verh,posFront.y*verh,5,5);
+    ellipse(posBack.x*verh,posBack.y*verh,5,5);
    }
    private void printPos(){
      println("Front:"+ posFront);
