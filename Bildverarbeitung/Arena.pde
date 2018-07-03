@@ -6,7 +6,7 @@ class Arena{
   
   private Capture cam;    //Kamera
   
-  private color[][] pic;   //2-dimensionaler Array von Farben aus Kamerabild
+  public color[][] pic;   //2-dimensionaler Array von Farben aus Kamerabild
   
   //aktuelle Position von
   public PVector posFood;   //Futter
@@ -41,24 +41,9 @@ class Arena{
       
       //initCols();
       colHint = color(122,122,122);
-      colFront = color(135,15,40);
-      colBack = color(10,105,80);
-      colFood = color(165,120,170);
-  }
-  private void initCols(){
-    //Farben bei optimaler Beleuchtung:
-      color oHint = color(255,255,255);  //weiß
-      color oFront = color(255,0,0);     //rot
-      color oBack = color(0,255,0);      //grün  
-      color oFood = color(0,0,255);      //blau
-      
-      colHint = pic[(int)(pBreite/2)][(int)(pHoehe/2)];
-      
-      color dif = color(red(oHint)-red(colHint),green(oHint)-green(colHint),blue(oHint)-blue(colHint));
-      
-      colFront = color(red(oFront)-red(dif),green(oFront)-green(dif),blue(oFront)-blue(dif));
-      colBack = color(red(oBack)-red(dif),green(oBack)-green(dif),blue(oBack)-blue(dif));
-      colFront = color(red(oFood)-red(dif),green(oFood)-green(dif),blue(oFood)-blue(dif));
+      colFront = color(170,180,75); //gelb
+      colBack = color(145,35,10);   //rot
+      colFood = color(91,120,50); //
   }
    //aktualisiert die Positionen 
    public void update(){
@@ -70,6 +55,28 @@ class Arena{
    }
    public void printColAtPos(int x,int y){
       printCol(pic[x][y]);
+   }
+   //gibt die durchschnittliche Farbe an Stelle x,y aus
+   private color avgColAt(int x, int y){
+    color[] colAr = new color[20];
+    for(int i = 0; i<20;i++){
+      update();
+      colAr[i] = feld.pic[x][y];
+    }
+    return avgCol(colAr);
+   }
+   //gibt die Durchschnittsfarbe zurück
+   public color avgCol(color[] colAr){
+     float sumR = 0;
+     float sumG = 0;
+     float sumB = 0;
+     int arL = colAr.length;
+    for(int i = 0; i<arL;i++){
+      sumR += red(colAr[i]);
+      sumG += green(colAr[i]);
+      sumB += blue(colAr[i]);
+    }
+    return color(sumR/arL,sumG/arL,sumB/arL);
    }
    //aktualisiert Positionen von Food,Front,Back anhand von Array pic
    private void updatePos(){
@@ -130,12 +137,14 @@ class Arena{
    }
    //gibt zurück ob sich die Farben ausreichend ähneln
    private boolean colSimil(color a,color b){
-     float allDif = 50;
-     return colDif(a,b) <= allDif;
-   }
-   //gibt den insgesamten Unterschied der Farbwerte
-   private float colDif(color a, color b){
-     return abs(red(a)-red(b))+ abs(green(a)-green(b)) + abs(blue(a)-blue(b));
+     float tmDif = 50;           //total maximum Difference
+     float smDif = 25;           //single maximum Difference
+     
+     float absR = abs(red(a)-red(b));
+     float absG = abs(green(a)-green(b));
+     float absB = abs(blue(a)-blue(b));
+     
+     return absR+absG+absB <= tmDif && absR<smDif && absG<smDif && absG<smDif;
    }
    //aktualisiert Array "pic"
    private void updatePic(){
@@ -170,10 +179,26 @@ class Arena{
    }
    //gibt die einzelnen Farbwerte einer Farbe in der Konsole aus
    private void printCol(color col){
-     println("Rot: "+red(col)+ ", Blau: "+blue(col)+", Gruen: "+green(col)); 
+     println("Rot: "+red(col)+ ", Gruen: "+green(col) + ", Blau: "+blue(col)); 
    }
    /*    vorerst nicht benötigter Code: 
    
+   private void initCols(){
+    //Farben bei optimaler Beleuchtung:
+      color oHint = color(255,255,255);  //weiß
+      color oFront = color(255,0,0);     //rot
+      color oBack = color(0,255,0);      //grün  
+      color oFood = color(0,0,255);      //blau
+      
+      colHint = pic[(int)(pBreite/2)][(int)(pHoehe/2)];
+      
+      color dif = color(red(oHint)-red(colHint),green(oHint)-green(colHint),blue(oHint)-blue(colHint));
+      
+      colFront = color(red(oFront)-red(dif),green(oFront)-green(dif),blue(oFront)-blue(dif));
+      colBack = color(red(oBack)-red(dif),green(oBack)-green(dif),blue(oBack)-blue(dif));
+      colFront = color(red(oFood)-red(dif),green(oFood)-green(dif),blue(oFood)-blue(dif));
+  }
+  
    //gibt den PixelArray aus (für Tests),schneller ist camPic benutzen
    private void displayPic(){
      for(int i = 0;i< pBreite;i++){

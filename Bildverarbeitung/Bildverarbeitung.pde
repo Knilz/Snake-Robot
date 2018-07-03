@@ -27,6 +27,6 @@ void draw(){
   feld.drawPos();
 }
 void mouseReleased(){
+  //feld.printCol(feld.avgColAt(mouseX,mouseY));
   feld.update();
-  feld.printColAtPos(mouseX,mouseY);
 }
