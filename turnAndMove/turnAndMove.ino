@@ -1,4 +1,5 @@
 #include <Stepper.h>
+int empfangeneDatenZahl =0;
 
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 
@@ -9,18 +10,43 @@ const float radiusFromWheel = 0.044;
 const float oneRevolution = 2 * M_PI * 0.044; //-> one revolution is 0.28 meters
 const float radiusFromRoboter = 0.0825;
 
+float winkel = 0;
+float distance = 0;
+
 void setup() {
   // set the speed at 60 rpm:
   myStepper1.setSpeed(60);
   myStepper2.setSpeed(60);
-  Serial.begin(9600);
+ 
 
-  turn(307); //in degree
-  Move(685); //in mm
+  Serial.begin(9600);
+  
+  //Kontakt zum arduino aufbauen
+  while (Serial.available() <= 0) {
+    Serial.println("A");   // send a capital A
+    delay(300);
+  }
 }
 
 void loop() {
-
+  
+  
+  //while(winkel==0||distance==0){
+  
+  //solange nicht beide werte empfangen wurden, weiter  daten empfangen
+  while(empfangenedatenZahl !=2){
+    receiveData();
+  }
+  turn(winkel);
+  Move(distance);
+  delay(2000);
+  
+  Serial.println("winkel:" +(String)winkel+ "dist:"+(String)distance);
+ 
+  winkel=0;
+  distance=0;
+  empfangeneDatenZahl =0;
+  
 }
 
 //the degree is clockwise and turn the robot
@@ -48,4 +74,35 @@ void Move(float distance) {
     myStepper2.step(1);
   }
 }
+
+void receiveData(){
+ 
+    if(Serial.available() > 0) { // Wenn Daten da sind...
+    int inByte = Serial.read(); // ...dann lies das erste Byte und speichere es in der Variable inByte
+    switch (inByte) {           // und nimm den Wert, der übertragen wurde, genauer unter die Lupe.
+    case 'w':                   // wenn dieser das Zeichen 'r' für 'rechts' ist...
+      {
+       winkel= Serial.parseFloat();
+       // dann lies erstmal eine Zahl ein (wenn irgendetwas anders kam, ist das Ergebnis 0 )
+       empfangeneDatenZahl ++;
+       
+      break;                    // höre hier auf.
+      }
+    case 'd':                   // ..links genauso:
+      {
+      distance =Serial.parseFloat(); 
+      empfangeneDatenZahl++;// dann lies erstmal eine Zahl ein (wenn irgendetwas anders kam, ist das Ergebnis 0 )
+      
+      break;                    // höre hier auf.
+      }
+    default: // bei uns unbekannten Kommandos machen wir einfach garnichts...
+      break;
+
+    
+    }
+  }
+  
+  
+}
+
 
