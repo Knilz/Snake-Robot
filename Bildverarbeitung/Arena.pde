@@ -32,19 +32,26 @@ class Arena{
       this.aBreite = aBreite;
       this.aHoehe = aHoehe;
       VerhCheck();
-      
-      posFood = new PVector(0,0);
-      posFront = new PVector(0,0);
-      posBack = new PVector(0,0);
+     
+      initPos();
       
       pic = new color[pBreite][pHoehe];
       
       //initCols();
       colHint = color(122,122,122);
-      colFront = color(170,180,75); //gelb
-      colBack = color(145,35,10);   //rot
-      colFood = color(91,120,50); //
+      colFront = color(163,169,62); //gelb
+      colBack = color(130,23,1);   //rot
+      colFood = color(25,100,180); //blau
   }
+  //wird im Hauptprogramm einmal in draw aufgerufen
+  public void allesWasInDrawSoll(){
+    camPic();
+    fill(color(0,0,0));
+    ellipse(320,240,5,5);
+    drawPos();
+    ellipse(mouseX,mouseY,5,5);
+    update();  }
+  
    //aktualisiert die Positionen 
    public void update(){
      updatePic();
@@ -53,6 +60,12 @@ class Arena{
      camPic();
      drawPos();
    }
+   //setzt alle Positionen auf 0
+   private void initPos(){
+      posFood = new PVector(0,0);
+      posFront = new PVector(0,0);
+      posBack = new PVector(0,0); 
+   }
    public void printColAtPos(int x,int y){
       printCol(pic[x][y]);
    }
@@ -60,7 +73,7 @@ class Arena{
    private color avgColAt(int x, int y){
     color[] colAr = new color[20];
     for(int i = 0; i<20;i++){
-      update();
+      updatePic();
       colAr[i] = feld.pic[x][y];
     }
     return avgCol(colAr);
@@ -80,6 +93,7 @@ class Arena{
    }
    //aktualisiert Positionen von Food,Front,Back anhand von Array pic
    private void updatePos(){
+     initPos();
      for(int i = 0;i<pBreite;i++){
       for(int j = 0;j<pHoehe;j++){
         if(colSimil(pic[i][j],colFront))
@@ -101,9 +115,10 @@ class Arena{
    public void drawPos(){
     float verh = pBreite/aBreite;
     fill(color(255,255,255));
-    ellipse(posFood.x*verh,posFood.y*verh,5,5);
-    ellipse(posFront.x*verh,posFront.y*verh,5,5);
-    ellipse(posBack.x*verh,posBack.y*verh,5,5);
+    int r = 10; //radius der Punkte
+    ellipse(posFood.x*verh,posFood.y*verh,r,r);
+    ellipse(posFront.x*verh,posFront.y*verh,r,r);
+    ellipse(posBack.x*verh,posBack.y*verh,r,r);
    }
    private void printPos(){
      println("Front:"+ posFront);
@@ -121,7 +136,6 @@ class Arena{
     PVector mpToFood = PVector.sub(posFood,mp);
     this.dist = mpToFood.mag();
     float det = det(rV,mpToFood);
-    println("det: "+det);
     float angle = degrees(PVector.angleBetween(rV,mpToFood));
     if(det>0){
       this.deg = angle;
@@ -136,15 +150,36 @@ class Arena{
      return (a.x*b.y) - (a.y*b.x);
    }
    //gibt zurück ob sich die Farben ausreichend ähneln
-   private boolean colSimil(color a,color b){
-     float tmDif = 50;           //total maximum Difference
-     float smDif = 25;           //single maximum Difference
+   private boolean colSimil(color a,color b){  
+     float rDif = red(a)/red(b);
+     float gDif = green(a)/green(b);
+     float bDif = blue(a)/blue(b);
      
-     float absR = abs(red(a)-red(b));
-     float absG = abs(green(a)-green(b));
-     float absB = abs(blue(a)-blue(b));
-     
-     return absR+absG+absB <= tmDif && absR<smDif && absG<smDif && absG<smDif;
+     float absR = abs(rDif);
+     float absG = abs(gDif);
+     float absB = abs(bDif);
+     return colSimil(absR,absG,absB);
+   }
+   //kriegt r,g und b Abstand von zwei Farben übergeben und überprüft, ob 
+   private boolean colSimil(float r, float g,float b){
+     float tmDif = 30;           //total maximum Difference
+     float smDif = 15;           //single maximum Difference
+     return (r+g+b <= tmDif && r<smDif && g<smDif && b<smDif);
+   }
+   private boolean colSame(float r,float g,float b){
+     float lmDif = 30;           //light maximum difference
+     return floatSimil(new float[]{r,g,b},10);
+   }
+   //gibt zurück ob sich in einem float-Array alle einzelnen Einträge paarweise nicht zu stark unterscheiden, 
+   private boolean floatSimil(float[] flAr, float allDif){
+    for(int i = 0; i<flAr.length;i++){
+     for(int j = i; j< flAr.length;j++){
+        if(abs(flAr[i]-flAr[j])>allDif){
+           return false; 
+        }
+     }
+    }
+    return true;
    }
    //aktualisiert Array "pic"
    private void updatePic(){
