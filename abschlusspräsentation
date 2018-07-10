@@ -1,0 +1,56 @@
+Was macht euer Roboter?
+
+- wer hat von euch schon einmal das Spiel Snake auf dem Handy gespielt?
+- unser "Snake Robot" soll das Spiel praktisch für uns spielen und wir übernehmen als Mensch sozusagen die Rolle des Computer indem wir die Kugeln platzieren
+- die Kamera erkennt die Kugel von oben und sendet mithilfe des Computers die benötigten Daten an das bluethoothgerät am Roboter. Mit diesen Daten kann der roboter die Kugel ansteuern und erreichen
+
+
+
+Auf welche technischen Fragen musste eine Antwort gefunden werden?
+
+- Datenübertragung -> Bluethooth
+- Aufsammel-Mechanismus -> zu beginn eine zu komplexe Lösung gesucht, später immer mehr vereinfacht (war eine sehr gute Idee)
+- Kugeln erkennen -> zu beginn mit mehreren Entfernungsmessern, dann hatten wir aber zu viele Messfehler -> Kamera mit Bildverarbeitung
+- Schrittmotoren waren nicht so super -> alles ausgetauscht was hardwaremäßig Probleme bereitet hat -> hat gut funktioniert
+
+
+
+Vertiefung: Behandlung der 1-2 wichtigsten gefundenen Problemlösungen im Detail
+
+- Wie gelangt der Roboter zu den Kugeln?: 
+	-> Routenberechnung (anzusteuern der Winkel und erreichen der genauen Distanz)
+	-> Tisch ist ein zweidimensionaler Raum -> alles wird durch Vektoren beschrieben (genauere Beschreibung siehe Mark)
+	-> Roboter muss die Werte (Entfernung im mm und Winkel in Grad) ansteuern (genauere Beschreibung siehe Erik)
+	-> Übertragung der zu empfangenen Daten mithilfe von Bluethooth (genauere Beschreibung siehe Selina)
+- Wie erkennt die Kamera den Roboter und die aufzusammelnden Kugeln?:
+	-> Kamerabild wird in ein zweidimensionales Array gespeichert -> in jedem einzelnen Feld des Arrays steht eine Farbe
+	-> Farben müssen vergliechen werden
+
+
+
+Ergebnis und Fazit: Was ist fertig geworden, woran hapert es noch?
+	-> Fertig geworden ist: -> berechnete Winkel und Entfernungen sind sehr genau
+							-> Roboter steuert sehr gut die Kugeln an
+							-> Daten werden übertragen und empfangen
+	-> Es hapert noch an: -> manchmal müssen wir den Reset-Knopf drücken, damit der Roboter die Daten empfängt
+						  -> die Bildverarbeitung ist nicht 100%ig zuverlässig
+
+
+
+Ausblick: Was wollt ihr im Blockkurs den nächsten Wochen noch fertigbekommen? Wo liegen langfristige Entwicklungspotentiale?
+	-> Bildverarbeitung verbessern
+	-> der Roboter könnte sich genau so bewegen wie in dem Spiel "Snake"
+	-> Snake Theme mithilfe eines Piezo-Summers im Hintergrund laufen lassen
+	-> Soundeffekte (z.B. wenn eine Kugel erfolgreich eingesammelt wurde)
+	-> Anpassungfähigkeit in anderen Umgebungen
+
+
+
+Demonstration: Zeigt euren Roboter in Aktion!
+- Falls die Bildverarbeitung noch nicht funktioniert, geben wir die Werte per Hand ein
+
+
+
+Ideen:
+
+Wir können euch auch unserer PS3-Kameras mit USB-Verlängerung leihen, mit der ihr „Live“ Bilder vom Roboter auf dem Beamer zeigen könnt. Das solltet ihr dann allerdings unbedingt vorher testen.
