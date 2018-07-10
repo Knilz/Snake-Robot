@@ -12,11 +12,6 @@ void setup(){
 }
 void draw(){
   feld.allesWasInDrawSoll(); 
-    /*feld.camPic();
-    fill(color(0,0,0));
-    ellipse(320,240,5,5);
-    feld.drawPix();
-    ellipse(mouseX,mouseY,5,5);*/
 }
 void mouseReleased(){
   feld.update();
