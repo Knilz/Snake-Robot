@@ -18,16 +18,21 @@ void setup() {
   String[] cameras = Capture.list();
   cam = new Capture(this, cameras[0]);
   println("verwendete Kamera: " +cameras[0]);
-  feld = new Arena(cam,640,480,1040,760); 
-  myPort = new Serial(this, Serial.list()[1], 9600);
+  feld = new Arena(cam,640,480,1040,760);
+  String[] serials = Serial.list();
+  for(int i = 0;i<serials.length;i++){
+    println(serials[i]);
+  }
+  myPort = new Serial(this, Serial.list()[0], 9600);
  
     
  
 }
 void draw() {
+  feld.allesWasInDrawSoll();//zeichnet was die kamera sieht auf den canvas
+  
   if(angeschaltet){
   //lese string vom arduino ein
-  feld.allesWasInDrawSoll();//zeichnet was die kamera sieht auf den canvas
   String val = myPort.readStringUntil('\n');//lese Serialport ein
   //wenn etwas gesendet wurde....
   if (val != null){
@@ -36,9 +41,8 @@ void draw() {
     
     
    myPort.clear();//löscht was der Arduino gesendet hat aus dem serialport
-   feld.update();//aktualisiert die Positions-vektoren vom Roboter, sucht nach Kugeln etc.
- 
-  
+   
+  feld.update();//aktualisiert die Positions-vektoren vom Roboter, sucht nach Kugeln etc.
   // zugriff auf die eben aktualisierten attribute
    
         float winkel = feld.deg; 
@@ -50,18 +54,26 @@ void draw() {
         myPort.write("d"+str(distance));
         println("distance gesendet");
         myPort.clear();
-        angeschaltet = false;//für  testfahrten: wenn diese Zeile aktiviert ist, bleibt der Roboter nach dem einsammeln stehen
+        println("warten");
         
+        //angeschaltet = false;//für  testfahrten: wenn diese Zeile aktiviert ist, bleibt der Roboter nach dem einsammeln stehen
+       
+       
   }
         
   }
-    /*else{
-      println("waiting");
+    else{
+
+      
     }
-    */
+    
     
   
  
+}
+void mouseReleased(){
+ feld.update();
+ //feld.printCol(feld.avgColAt(mouseX,mouseY)); 
 }
 
     
