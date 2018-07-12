@@ -38,12 +38,11 @@ Ergebnis und Fazit: Was ist fertig geworden, woran hapert es noch?
 
 
 Ausblick: Was wollt ihr im Blockkurs den nächsten Wochen noch fertigbekommen? Wo liegen langfristige Entwicklungspotentiale?
-	-> Bildverarbeitung verbessern
+	-> Bildverarbeitung noch genauer machen (z.B. über Größe des Farbflecks)
 	-> der Roboter könnte sich genau so bewegen wie in dem Spiel "Snake"
 	-> Snake Theme mithilfe eines Piezo-Summers im Hintergrund laufen lassen
 	-> Soundeffekte (z.B. wenn eine Kugel erfolgreich eingesammelt wurde)
-	-> Anpassungfähigkeit in anderen Umgebungen
-
+	-> Anpassungfähigkeit in anderen Umgebungen(z.B. über ProcessingApp auf dem Handy das sowohl Kamera als auch Bluetooth-Modul hat)
 
 
 Demonstration: Zeigt euren Roboter in Aktion!
