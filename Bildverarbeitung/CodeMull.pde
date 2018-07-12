@@ -30,6 +30,7 @@
     }
     return true;
    }
+   
    private void initCols(){
     //Farben bei optimaler Beleuchtung:
       color oHint = color(255,255,255);  //weiß
