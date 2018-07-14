@@ -42,13 +42,15 @@ class Arena {
 
     pic = new color[pBreite][pHoehe];
 
-    colFront = color(75, 125, 47); //grün
-    colFood = color(85, 4, 0);   //rot
-    colBack = color(18, 81, 150); //blau
+    colFront = color(128, 40, 70); //gelb
+    colBack = color(150, 30, 10);   //rot
+    colFood = color(8, 76, 160); //blau
   }
   //wird im Hauptprogramm einmal in draw aufgerufen
   public void allesWasInDrawSoll() {
     this.camPic();
+    fill(color(0, 0, 0));
+    ellipse(320, 240, 5, 5);
     this.drawPix();
     ellipse(mouseX, mouseY, 5, 5);
   }
@@ -92,7 +94,7 @@ class Arena {
   private void updatePix() {
     initPix();
 
-    float allDif = 50;              //erlaubter Abstand den die Farben haben dürfen um als gesuchtes Objekt erkannt zu werden
+    float allDif = 100;              //erlaubter Abstand den die Farben haben dürfen um als gesuchtes Objekt erkannt zu werden
     float bestFront = allDif;
     float bestBack = allDif;
     float bestFood = allDif;
