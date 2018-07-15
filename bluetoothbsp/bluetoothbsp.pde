@@ -7,8 +7,6 @@ Arena feld;
  String val;//input variable
 boolean angeschaltet =true;//wenn false werden keine neuen daten versendet und der Roboter bleibt stehen
 
-
-
 void setup() {
  
 
@@ -57,6 +55,10 @@ void sendToArduino(float winkel, float distance){
 //angeschaltet = false;//für  testfahrten: wenn diese Zeile aktiviert ist, bleibt der Roboter nach dem einsammeln stehen
   
 }
+void mouseReleased(){
 
+  feld.printCol(feld.avgColAt(mouseX,mouseY));
+
+}
     
    
