@@ -12,21 +12,25 @@ void setup() {
 
   size(640, 480);
   String[] cameras = Capture.list();
-  for(int i = 0; i<cameras.length;i++){
+  /*for(int i = 0; i<cameras.length;i++){
    println(cameras[i]); 
-  }
+  }*/
   cam = new Capture(this, cameras[1]);
   println("verwendete Kamera: " +cameras[0]);
   feld = new Arena(cam,640,480,1040,760); 
-  myPort = new Serial(this, Serial.list()[1], 9600);
+  String[] serials = Serial.list();
+  for(int i = 0; i<serials.length;i++){
+   println(serials[i]); 
+  }
+  myPort = new Serial(this, Serial.list()[0], 9600);
  
     
  
 }
 void draw() {
+  feld.allesWasInDrawSoll();//zeichnet was die kamera sieht auf den canvas
   if(angeschaltet){
   //lese string vom arduino ein
-    feld.allesWasInDrawSoll();//zeichnet was die kamera sieht auf den canvas
     String val = myPort.readStringUntil('\n');//lese Serialport ein
 
     if (val != null){    //wenn ein String vomArduino angekommen ist....
@@ -56,9 +60,8 @@ void sendToArduino(float winkel, float distance){
   
 }
 void mouseReleased(){
-
-  feld.printCol(feld.avgColAt(mouseX,mouseY));
-
+  //feld.printCol(feld.avgColAt(mouseX,mouseY));
+  feld.update();
 }
     
    

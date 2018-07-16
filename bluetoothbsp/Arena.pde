@@ -42,15 +42,13 @@ class Arena {
 
     pic = new color[pBreite][pHoehe];
 
-    colFront = color(128, 40, 70); //gelb
-    colBack = color(150, 30, 10);   //rot
-    colFood = color(8, 76, 160); //blau
+    colFront = color(81, 135, 55); //grün
+    colBack = color(7, 77, 169);   //blau
+    colFood = color(95, 16, 3); //rot
   }
   //wird im Hauptprogramm einmal in draw aufgerufen
   public void allesWasInDrawSoll() {
     this.camPic();
-    fill(color(0, 0, 0));
-    ellipse(320, 240, 5, 5);
     this.drawPix();
     ellipse(mouseX, mouseY, 5, 5);
   }
@@ -58,6 +56,7 @@ class Arena {
   public void update() {
     updatePic();
     updatePix();
+    drawPix();
     updatePos();
     updateDegDist();
   }
