@@ -54,42 +54,38 @@ class Arena {
     this.drawPix();
     ellipse(mouseX, mouseY, 5, 5);
   }
-
-  //aktualisiert die Positionen 
+  //aktualisiert alle wichtigen Daten 
   public void update() {
     updatePic();
     updatePix();
     updatePos();
     updateDegDist();
   }
-  //setzt alle Positionen auf 0
+  //aktualisiert alle wichtigen Daten so, als ob das Futter auf der Mausposition liegen würde
+  public void updateOnMouse(){
+    updatePic();
+    updatePix();
+    this.pixFood = new PVector(mouseX,mouseY);
+    updatePos();
+    updateDegDist();
+  }
+  
+  //gibt das aktuelle Bild der Kamera aus
+  private void camPic() {
+    //println("camPic");
+    if (cam.available()) {
+      //println("cam.available");
+      cam.read();
+    }
+    image(cam, 0, 0);
+  }
+  //setzt alle Pixel-Positionen auf 0
   private void initPix() {
     pixFood = new PVector(0, 0);
     pixFront = new PVector(0, 0);
     pixBack = new PVector(0, 0);
   }
-  //gibt die durchschnittliche Farbe an Stelle x,y aus
-  private color avgColAt(int x, int y) {
-    color[] colAr = new color[20];
-    for (int i = 0; i<20; i++) {
-      updatePic();
-      colAr[i] = feld.pic[x][y];
-    }
-    return avgCol(colAr);
-  }
-  //gibt die Durchschnittsfarbe aus einer Listen an Farben zurück
-  public color avgCol(color[] colAr) {
-    float sumR = 0;
-    float sumG = 0;
-    float sumB = 0;
-    int arL = colAr.length;
-    for (int i = 0; i<arL; i++) {
-      sumR += red(colAr[i]);
-      sumG += green(colAr[i]);
-      sumB += blue(colAr[i]);
-    }
-    return color(sumR/arL, sumG/arL, sumB/arL);
-  }
+
   //aktualisiert pixel-Positionen von Food,Front,Back anhand von Array pic
   private void updatePix() {
     initPix();
@@ -115,6 +111,14 @@ class Arena {
     }
     printPix();
   }
+  
+  private float colDist(color a, color b) {  
+    float rDif = red(a)-red(b);
+    float gDif = green(a)-green(b);
+    float bDif = blue(a)-blue(b);
+    return new PVector(rDif, gDif, bDif).mag();
+  }
+
   private void updatePos() {
     float verh = aBreite/pBreite;
     posFood = PVector.mult(pixFood, verh);
@@ -123,27 +127,7 @@ class Arena {
 
     printPos();
   }
-  public void drawPix() {
-    fill(color(255, 255, 255));
-    int r = 10; //radius der Punkte
-    ellipse(pixFood.x, pixFood.y, r, r);
-    ellipse(pixFront.x, pixFront.y, r, r);
-    ellipse(pixBack.x, pixBack.y, r, r);
-  }
-  private void printPix() {
-    println("pixFront: "+pixFront);
-    println("pixBack: "+pixBack);
-    println("pixFood: "+pixFood);
-  }
-  private void printPos() {
-    println("Front:"+ posFront);
-    println("Back: " +posBack);
-    println("Food: " +posFood);
-  }
-  private void printDegDist() {
-    println("dist: " +dist);
-    println("deg: " +deg);
-  }
+
   //berechnet aus den aktuellen Positionsvektoren den zu drehenden Winkel, und die zu fahrende Distanz
   private void updateDegDist() {
     if (!(posFood.x == 0 && posFood.y == 0)) {
@@ -169,13 +153,6 @@ class Arena {
     return (a.x*b.y) - (a.y*b.x);
   }
 
-  public float colDist(color a, color b) {  
-    float rDif = red(a)-red(b);
-    float gDif = green(a)-green(b);
-    float bDif = blue(a)-blue(b);
-    return new PVector(rDif, gDif, bDif).mag();
-  }
-
   //aktualisiert Array "pic"
   private void updatePic() {
     if (cam.available()) {
@@ -199,16 +176,51 @@ class Arena {
       println("Unterschied: "+verhDif);
     }
   }
-
-  //gibt das aktuelle Bild der Kamera aus
-  public void camPic() {
-    //println("camPic");
-    if (cam.available()) {
-      //println("cam.available");
-      cam.read();
+  //gibt die durchschnittliche Farbe an Stelle x,y aus
+  public color avgColAt(int x, int y) {
+    color[] colAr = new color[20];
+    for (int i = 0; i<20; i++) {
+      updatePic();
+      colAr[i] = feld.pic[x][y];
     }
-    image(cam, 0, 0);
+    return avgCol(colAr);
   }
+  //gibt die Durchschnittsfarbe aus einer Listen an Farben zurück
+  private color avgCol(color[] colAr) {
+    float sumR = 0;
+    float sumG = 0;
+    float sumB = 0;
+    int arL = colAr.length;
+    for (int i = 0; i<arL; i++) {
+      sumR += red(colAr[i]);
+      sumG += green(colAr[i]);
+      sumB += blue(colAr[i]);
+    }
+    return color(sumR/arL, sumG/arL, sumB/arL);
+  }
+  
+  private void drawPix() {
+    fill(color(255, 255, 255));
+    int r = 10; //radius der Punkte
+    ellipse(pixFood.x, pixFood.y, r, r);
+    ellipse(pixFront.x, pixFront.y, r, r);
+    ellipse(pixBack.x, pixBack.y, r, r);
+  }
+  private void printPix() {
+    println("pixFront: "+pixFront);
+    println("pixBack: "+pixBack);
+    println("pixFood: "+pixFood);
+  }
+  private void printPos() {
+    println("Front:"+ posFront);
+    println("Back: " +posBack);
+    println("Food: " +posFood);
+  }
+  private void printDegDist() {
+    println("dist: " +dist);
+    println("deg: " +deg);
+  }
+
   //gibt die einzelnen Farbwerte einer Farbe in der Konsole aus
   private void printCol(color col) {
     println("Rot: "+red(col)+ ", Gruen: "+green(col) + ", Blau: "+blue(col));
