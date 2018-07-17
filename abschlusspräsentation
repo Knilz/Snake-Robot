@@ -1,8 +1,10 @@
 (Selina) Was macht euer Roboter?
 
 - wer hat von euch schon einmal das Spiel Snake auf dem Handy gespielt?
-- unser "Snake Robot" soll das Spiel praktisch für uns spielen und wir übernehmen als Mensch sozusagen die Rolle des Computer indem wir die Kugeln platzieren
-- die Kamera erkennt die Kugel von oben und sendet mithilfe des Computers die benötigten Daten an das bluethoothgerät am Roboter. Mit diesen Daten kann der roboter die Kugel ansteuern und erreichen
+- unser "Snake Robot" soll das Spiel praktisch für uns spielen und wir übernehmen als Mensch sozusagen die Rolle des Computer,
+indem wir die Kugeln platzieren
+- die Kamera erkennt die Kugel von oben und sendet mithilfe des Computers die benötigten Daten an das bluethoothgerät am Roboter
+- Mit diesen Daten kann der roboter die Kugel ansteuern und erreichen
 
 
 
@@ -41,7 +43,8 @@ Ausblick: Was wollt ihr im Blockkurs den nächsten Wochen noch fertigbekommen? W
 (Erik)	-> der Roboter könnte sich genau so bewegen wie in dem Spiel "Snake"
 	-> Snake Theme mithilfe eines Piezo-Summers im Hintergrund laufen lassen
 	-> Soundeffekte (z.B. wenn eine Kugel erfolgreich eingesammelt wurde)
-	-> Anpassungfähigkeit in anderen Umgebungen(z.B. über ProcessingApp auf dem Handy das sowohl Kamera als auch Bluetooth-Modul hat)
+	-> Anpassungfähigkeit in anderen Umgebungen(z.B. über ProcessingApp auf dem Handy das sowohl Kamera
+	als auch Bluetooth-Modul hat)
 
 
 Demonstration: Zeigt euren Roboter in Aktion!
@@ -51,4 +54,5 @@ Demonstration: Zeigt euren Roboter in Aktion!
 
 Ideen:
 
-Wir können euch auch unserer PS3-Kameras mit USB-Verlängerung leihen, mit der ihr „Live“ Bilder vom Roboter auf dem Beamer zeigen könnt. Das solltet ihr dann allerdings unbedingt vorher testen.
+Wir können euch auch unserer PS3-Kameras mit USB-Verlängerung leihen, mit der ihr „Live“ Bilder vom Roboter auf dem Beamer zeigen könnt
+Das solltet ihr dann allerdings unbedingt vorher testen.
