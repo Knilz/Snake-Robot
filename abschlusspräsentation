@@ -8,10 +8,10 @@
 
 (Erik) Auf welche technischen Fragen musste eine Antwort gefunden werden?
 
-- Datenübertragung -> Bluethooth
-- Aufsammel-Mechanismus -> zu beginn eine zu komplexe Lösung gesucht, später immer mehr vereinfacht (war eine sehr gute Idee)
 - Kugeln erkennen -> zu beginn mit mehreren Entfernungsmessern, dann hatten wir aber zu viele Messfehler -> Kamera mit Bildverarbeitung
+- Datenübertragung -> Bluethooth
 - Schrittmotoren waren nicht so super -> alles ausgetauscht was hardwaremäßig Probleme bereitet hat -> hat gut funktioniert
+- Aufsammel-Mechanismus -> zu beginn eine zu komplexe Lösung gesucht, später immer mehr vereinfacht (war eine sehr gute Idee)
 
 
 
