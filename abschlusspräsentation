@@ -1,4 +1,4 @@
-Was macht euer Roboter?
+(Selina) Was macht euer Roboter?
 
 - wer hat von euch schon einmal das Spiel Snake auf dem Handy gespielt?
 - unser "Snake Robot" soll das Spiel praktisch für uns spielen und wir übernehmen als Mensch sozusagen die Rolle des Computer indem wir die Kugeln platzieren
@@ -6,7 +6,7 @@ Was macht euer Roboter?
 
 
 
-Auf welche technischen Fragen musste eine Antwort gefunden werden?
+(Erik) Auf welche technischen Fragen musste eine Antwort gefunden werden?
 
 - Datenübertragung -> Bluethooth
 - Aufsammel-Mechanismus -> zu beginn eine zu komplexe Lösung gesucht, später immer mehr vereinfacht (war eine sehr gute Idee)
@@ -17,29 +17,28 @@ Auf welche technischen Fragen musste eine Antwort gefunden werden?
 
 Vertiefung: Behandlung der 1-2 wichtigsten gefundenen Problemlösungen im Detail
 
-- Wie gelangt der Roboter zu den Kugeln?: 
-	-> Routenberechnung (anzusteuern der Winkel und erreichen der genauen Distanz)
-	-> Tisch ist ein zweidimensionaler Raum -> alles wird durch Vektoren beschrieben (genauere Beschreibung siehe Mark)
-	-> Roboter muss die Werte (Entfernung im mm und Winkel in Grad) ansteuern (genauere Beschreibung siehe Erik)
-	-> Übertragung der zu empfangenen Daten mithilfe von Bluethooth (genauere Beschreibung siehe Selina)
-- Wie erkennt die Kamera den Roboter und die aufzusammelnden Kugeln?:
+(Mark)- Wie erkennt die Kamera den Roboter und die aufzusammelnden Kugeln?:
 	-> Kamerabild wird in ein zweidimensionales Array gespeichert -> in jedem einzelnen Feld des Arrays steht eine Farbe
 	-> Farben müssen vergliechen werden
-
+- Wie gelangt der Roboter zu den Kugeln?: 
+	-> Routenberechnung (anzusteuern der Winkel und erreichen der genauen Distanz)
+	-> Tisch ist ein zweidimensionaler Raum -> alles wird durch Vektoren beschrieben
+(Selina)-> Übertragung der zu empfangenen Daten mithilfe von Bluethooth 
+(Erik)  -> Roboter muss die Werte (Entfernung im mm und Winkel in Grad) ansteuern  
 
 
 Ergebnis und Fazit: Was ist fertig geworden, woran hapert es noch?
 	-> Fertig geworden ist: -> berechnete Winkel und Entfernungen sind sehr genau
 							-> Roboter steuert sehr gut die Kugeln an
 							-> Daten werden übertragen und empfangen
-	-> Es hapert noch an: -> manchmal müssen wir den Reset-Knopf drücken, damit der Roboter die Daten empfängt
-						  -> die Bildverarbeitung ist nicht 100%ig zuverlässig
+(Selina) -> Es hapert noch an: -> manchmal müssen wir den Reset-Knopf drücken, damit der Roboter die Daten empfängt
+(Mark)	 -> die Bildverarbeitung ist nicht 100%ig zuverlässig
 
 
 
 Ausblick: Was wollt ihr im Blockkurs den nächsten Wochen noch fertigbekommen? Wo liegen langfristige Entwicklungspotentiale?
 	-> Bildverarbeitung noch genauer machen (z.B. über Größe des Farbflecks)
-	-> der Roboter könnte sich genau so bewegen wie in dem Spiel "Snake"
+(Erik)	-> der Roboter könnte sich genau so bewegen wie in dem Spiel "Snake"
 	-> Snake Theme mithilfe eines Piezo-Summers im Hintergrund laufen lassen
 	-> Soundeffekte (z.B. wenn eine Kugel erfolgreich eingesammelt wurde)
 	-> Anpassungfähigkeit in anderen Umgebungen(z.B. über ProcessingApp auf dem Handy das sowohl Kamera als auch Bluetooth-Modul hat)
