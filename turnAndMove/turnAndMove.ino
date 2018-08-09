@@ -1,8 +1,8 @@
 #include <Stepper.h>
-int empfangeneDatenZahl =0;
+
 
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
-
+int empfangeneDatenZahl = 0;
 Stepper myStepper1(stepsPerRevolution, 10, 11);
 Stepper myStepper2(stepsPerRevolution, 8, 9);
 
@@ -10,8 +10,8 @@ const float radiusFromWheel = 0.044;
 const float oneRevolution = 2 * M_PI * 0.044; //-> one revolution is 0.28 meters
 const float radiusFromRoboter = 0.0825;
 
-float winkel = 0;
-float distance = 0;
+float winkel = 0;//speichert später den übermittelten Winkel
+float distance = 0;//speichert später die übermittelte Distanz
 
 void setup() {
   // set the speed at 60 rpm:
@@ -23,7 +23,7 @@ void setup() {
   
   //Kontakt zum arduino aufbauen
   while (Serial.available() <= 0) {
-    Serial.println("A");   // send a capital A
+    Serial.println("A");   // sendet den Buchstaben "A" bis eine Verbindung zu Processing aufgestellt wurde
     delay(300);
   }
 }
@@ -31,18 +31,19 @@ void setup() {
 void loop() {
   
   
-  //while(winkel==0||distance==0){
+  
   
   //solange nicht beide werte empfangen wurden, weiter  daten empfangen
-  while(empfangenedatenZahl !=2){
+  while(empfangeneDatenZahl !=2){
     receiveData();
   }
   turn(winkel);
   Move(distance);
   delay(2000);
   
-  Serial.println("winkel:" +(String)winkel+ "dist:"+(String)distance);
+  Serial.println("winkel: " +(String)winkel+ " dist: "+(String)distance);//sendet kontroll-string an Processing
  
+  //Variabeln für neuen durchgang auf 0 setzten
   winkel=0;
   distance=0;
   empfangeneDatenZahl =0;
@@ -78,24 +79,24 @@ void Move(float distance) {
 void receiveData(){
  
     if(Serial.available() > 0) { // Wenn Daten da sind...
-    int inByte = Serial.read(); // ...dann lies das erste Byte und speichere es in der Variable inByte
-    switch (inByte) {           // und nimm den Wert, der übertragen wurde, genauer unter die Lupe.
-    case 'w':                   // wenn dieser das Zeichen 'r' für 'rechts' ist...
+    int inByte = Serial.read(); // erster Byte wird eingelesen
+    switch (inByte) {          
+    case 'w':   //wenn der string mit w anfängt, handelt es sich um den winkel               
       {
-       winkel= Serial.parseFloat();
-       // dann lies erstmal eine Zahl ein (wenn irgendetwas anders kam, ist das Ergebnis 0 )
+       winkel= Serial.parseFloat();//die nachfolgende Zahl wird aus der schnittstelle gelesen und in winkel gespeichert
+       
        empfangeneDatenZahl ++;
        
-      break;                    // höre hier auf.
+      break;                  
       }
-    case 'd':                   // ..links genauso:
+    case 'd':                   // wenn der string mit d anfängt, ist die zahl danach die distanz
       {
       distance =Serial.parseFloat(); 
-      empfangeneDatenZahl++;// dann lies erstmal eine Zahl ein (wenn irgendetwas anders kam, ist das Ergebnis 0 )
+      empfangeneDatenZahl++;// 
       
-      break;                    // höre hier auf.
+      break;                   
       }
-    default: // bei uns unbekannten Kommandos machen wir einfach garnichts...
+    default: // bei anderen strings passiert nichts
       break;
 
     
