@@ -24,8 +24,6 @@ void setup() {
   }
   myPort = new Serial(this, Serial.list()[0], 9600);
  
-    
- 
 }
 void draw() {
   feld.allesWasInDrawSoll();//zeichnet was die kamera sieht auf den canvas
