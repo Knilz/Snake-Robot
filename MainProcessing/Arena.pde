@@ -35,6 +35,7 @@ class Arena {
     this.pBreite = pBreite;
     this.pHoehe = pHoehe;
 
+
     initPix();
     updatePos();
 
