@@ -19,6 +19,7 @@ void draw(){
   feld.allesWasInDrawSoll(); 
   feld.update();
 }
+
 void mouseReleased(){
   feld.printCol(feld.avgColAt(mouseX,mouseY));
 }
