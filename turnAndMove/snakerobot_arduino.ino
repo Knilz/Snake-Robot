@@ -1,3 +1,5 @@
+//Arduino-Programm für den Schlangen-Körper des Snake-robots
+
 #include <Stepper.h>
 
 
